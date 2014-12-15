@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>D3 Test</title>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <style type="text/css">
+      
+      .axis path,
+      .axis line {
+        fill: red;
+        stroke: black;
+        shape-rendering: crispEdges;
+      }
+      
+      .axis text {
+        font-family: sans-serif;
+        font-size: 11px;
+        font-color: red;
+      }
+
+    </style>
+  </head>
+  <body>
+   
+  </body>
+  <script type="text/javascript">
+  var w = 520;
+  var h = 220;
+  var barPadding = 2;
+  var padding = 1;
+  var dataset = [ 5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
+              11, 12, 15, 20, 18, 17, 16, 18, 23, 25 ];
+
+  var yScale = d3.scale.linear()
+                     .domain([0, d3.max(dataset, function(d) { return d })])
+                     .range([0, h]);
+
+  var yAxisScale = d3.scale.linear()
+                     .domain([0, d3.max(dataset, function(d) { return d })])
+                     .range([h, 0]);                   
+
+  var xScale = d3.scale.linear()
+                     .domain([0, dataset.length])
+                     .range([0, w]);
+
+  var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w + 20)   
+            .attr("height", h +20);
+
+  svg.selectAll("rect")
+         .data(dataset)
+         .enter()
+         .append("rect")
+         .attr("x", function(d, i) {
+            return (i * (w / dataset.length)) + 20;
+         })
+         .attr("y", function(d) {
+            return h - yScale(d);
+         })
+         .attr("width", w / dataset.length - barPadding)
+         .attr("height", function(d) {
+            return yScale(d);
+         })
+         .attr("fill", function(d) {
+          return "rgb(0, 0, " + (d * 10) + ")";
+         });
+
+
+  svg.selectAll("text")
+         .data(dataset)
+         .enter()
+         .append("text")
+         .text(function(d) {
+            return d;
+         })
+         .attr("x", function(d, i) {
+        return (i * (w / dataset.length) + (w / dataset.length - barPadding) / 2) + 20;
+    })
+         .attr("y", function(d) {
+        return h - yScale(d) + 14;  
+    })
+         .attr("font-family", "sans-serif")
+         .attr("font-size", "11px")
+         .attr("fill", "red")
+         .attr("text-anchor", "middle");
+
+  
+  var xAxis = d3.svg.axis()
+                  .scale(xScale)
+                  .orient("bottom");
+                  
+
+  var yAxis = d3.svg.axis()
+                  .scale(yAxisScale)
+                  .orient("left")
+                  .tickSize(5)
+                  .ticks(5);
+
+  svg.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(15," + (h - padding) + ")")
+        .call(xAxis);
+
+  svg.append("g")
+        .attr("class", "axis")      
+        .attr("transform", "translate(" + padding + 9 + ",0)")
+        .call(yAxis)
+        
+
+  </script>
+</html>    
