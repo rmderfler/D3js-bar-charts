@@ -25,14 +25,18 @@
    
   </body>
   <script type="text/javascript">
+
+  d3.json("dataj.rb", function(dataj) {
+  update(dataj);
+});
+  function update(data){
+
   var w = 520;
   var h = 220;
   var barPadding = 2;
   var padding = 1;
-  var dataset = [{"week":1, "usage":5}, {"week":2, "usage":10}, {"week":3, "usage":8}];
-  // d3.json(dataset, function (data) {
-  //   function(d){return d.age + 3}
-  // })
+  var dataset = data;
+
   var yScale = d3.scale.linear()
                      .domain([0, d3.max(dataset, function(d) { return d.usage })])
                      .range([0, h]);
@@ -113,6 +117,6 @@
         .attr("transform", "translate(" + padding + 9 + ",0)")
         .call(yAxis)
         
-
+}
   </script>
 </html>    
