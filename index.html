@@ -25,18 +25,22 @@
    
   </body>
   <script type="text/javascript">
-
+      
   d3.json("dataj.rb", function(dataj) {
-  update(dataj);
-});
+   
+    update(dataj)
+      
+  });
   function update(data){
-
+    
+  
   var w = 520;
   var h = 220;
-  var barPadding = 2;
+  var barPadding = 10;
   var padding = 1;
+  var tickPadding = 20;
   var dataset = data;
-
+  var box = []
   var yScale = d3.scale.linear()
                      .domain([0, d3.max(dataset, function(d) { return d.usage })])
                      .range([0, h]);
@@ -45,13 +49,11 @@
                      .domain([0, d3.max(dataset, function(d) { return d.usage })])
                      .range([h, 5]);                   
 
-  var xScale = d3.scale.linear()
-                     .domain([0, dataset.length])
-                     .range([0, w]);
+  
 
   var xAxisScale = d3.scale.ordinal()
-                    .domain([0, d3.max(dataset, function(d) { return d.week })])
-                    .rangeBands([0, w]);
+                    .domain(dataset.map(function(d) { return d.week }))
+                    .rangeRoundBands([0,w]);
 
   var svg = d3.select("body")
             .append("svg")
@@ -63,7 +65,7 @@
          .enter()
          .append("rect")
          .attr("x", function(d, i) {
-            return (i * (w / dataset.length)) + 20;
+            return (i*(w/dataset.length)) + 20;
          })
          .attr("y", function(d) {
             return h - yScale(d.usage);
@@ -97,14 +99,14 @@
   
   var xAxis = d3.svg.axis()
                   .scale(xAxisScale)
-                  .orient("bottom");
+                  .orient("bottom")
+                  .ticks(10);
                   
 
   var yAxis = d3.svg.axis()
                   .scale(yAxisScale)
-                  .orient("left")
-                  .tickSize(5)
-                  .ticks(5);
+                  .orient("left");
+                 
 
   svg.append("g")
         .attr("class", "axis")
