@@ -1,0 +1,54 @@
+<DOCTYPE! html>
+<html>
+<head>
+  <title>Div example</title>
+</head>
+
+<body>
+<style type="text/css"> 
+.graph {                    
+    width: 370px;  /* the image width  */ 
+    height: 226px; /* the image height */  
+    position: relative; 
+    background-color: red;
+}
+
+.graph ul li {  
+    position: absolute; 
+    width: 30px;  /* the width the vertical bar */ 
+    height: 200px;  /* the max height of the vertical bar */ 
+    bottom: 21px;   /* distance between bottom of image and x-axis */   
+    background-color: yellow;
+    text-align: center; 
+
+    font-weight: normal; 
+    color: blue; 
+    line-height: 2.5em;
+    border: 1px solid;
+    list-style: none;
+}
+
+/* left = the distance between image left and bar left */
+.graph li.mon { left: 30px; }
+.graph li.tue { left: 80px; }
+.graph li.wed { left: 130px; }
+.graph li.thu { left: 180px; }
+.graph li.fri { left: 230px; }
+.graph li.sat { left: 280px; }
+.graph li.sun { left: 330px; }
+</style>
+
+<div class="graph">
+    <ul>
+        <li class="mon" style="height: 50px;">25</li>
+        <li class="tue" style="height: 200px;">100</li>
+        <li class="wed" style="height: 100px;">50</li>
+        <li class="thu" style="height: 150px;">75</li>
+        <li class="fri" style="height: 50px;">25</li>
+        <li class="sat" style="height: 75px;">37.5</li>
+        <li class="sun" style="height: 180px;">90</li>        
+    </ul>
+</div>
+
+</body>
+</html>
